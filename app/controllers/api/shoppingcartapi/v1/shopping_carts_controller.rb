@@ -66,27 +66,31 @@ module Api
             end
 
             def purchase
-               shoppingCart = ShoppingCart.find(params[:id])
-               if shoppingCart.quantity > 0
-                  shoppingCart.decrement(:quantity)
-                  if shoppingCart.save
-                     render json: {
-                        status: 'SUCCESS',
-                        message: 'Bought specific shopping cart',
-                        data: shoppingCart
-                     }, status: :ok
+               shopCartNum = ShoppingCart.find(params[:id]).shopping_cart_num
+               productIds = ShoppingCart.select('product_num').where(shopping_cart_num: shopCartNum)
+               products = Product.where(id: productIds)
+               anyErrorFlag = false
+               products.all.each do |p|
+                  if p.quantity > 0
+                     p.decrement(:quantity)
+                     if !p.save
+                        anyErrorFlag = true
+                     end
                   else
-                     render json: {
-                        status: 'ERROR',
-                        message: 'Could not purchase specific shopping cart',
-                        data: shoppingCart.errors
-                     }, status: :unprocessable_entity
+                     anyErrorFlag = true
                   end
+               end
+               if anyErrorFlag
+                  render json: {
+                     status: 'SUCCESS',
+                     message: 'Transactions were complete with a few errors. Please review the shopping cart after the transaction',
+                     data: products
+                  }, status: :ok
                else
                   render json: {
-                     status: 'ERROR',
-                     message: 'Out of stock',
-                     data: shoppingCart
+                     status: 'SUCCESS',
+                     message: 'Transactions were fully complete successfully',
+                     data: products
                   }, status: :ok
                end
             end
