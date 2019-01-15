@@ -5,6 +5,7 @@ module Api
 
             def index
                shoppingCarts = ShoppingCart.order(:id)
+               setTotalPrice
                render json: {
                   status: 'SUCCESS',
                   message: 'Loaded shopping carts',
@@ -14,6 +15,7 @@ module Api
 
             def show
                shoppingCart = ShoppingCart.find(params[:id])
+               setTotalPrice
                render json: {
                   status: 'SUCCESS',
                   message: 'Loaded specific shopping cart',
@@ -23,6 +25,7 @@ module Api
 
             def create
                shoppingCart = ShoppingCart.new(shopping_cart_params)
+               setTotalPrice
                if shoppingCart.save
                   render json: {
                      status: 'SUCCESS',
@@ -41,6 +44,7 @@ module Api
             def destroy
                shoppingCart = ShoppingCart.find(params[:id])
                shoppingCart.destroy
+               setTotalPrice
                render json: {
                   status: 'SUCCESS',
                   message: 'Removed specific shopping cart',
@@ -50,6 +54,7 @@ module Api
 
             def update 
                shoppingCart = ShoppingCart.find(params[:id])
+               setTotalPrice
                if shoppingCart.update_attributes(shopping_cart_params)
                   render json: {
                      status: 'SUCCESS',
@@ -110,6 +115,20 @@ module Api
 
             def shopping_cart_params
                params.permit(:shopping_cart_num, :product_num)
+            end
+
+            def setTotalPrice
+               ShoppingCart.all.each do |shoppingcart|
+                  shopCartNum = shoppingcart.shopping_cart_num
+                  productIds = ShoppingCart.select('product_num').where(shopping_cart_num: shopCartNum)
+                  products = Product.where(id: productIds)
+                  totalPrice = 0
+                  products.all.each do |p|
+                     totalPrice += p.price
+                  end
+                  shoppingcart.total_price = totalPrice
+                  shoppingcart.save
+               end
             end
 
          end
