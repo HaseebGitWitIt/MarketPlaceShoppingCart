@@ -65,6 +65,31 @@ module Api
                end
             end
 
+            def showMarketPlace
+               if params[:onlyavail].to_s == "true"
+                  products = Product.where("quantity > 0").order(:id)
+                  render json: {
+                     status: 'SUCCESS',
+                     message: 'Loaded available products',
+                     data: products
+                  }, status: :ok
+               elsif params[:onlyavail].to_s == "false"
+                  products = Product.order(:id)
+                  render json: {
+                     status: 'SUCCESS',
+                     message: 'Loaded all products',
+                     data: products
+                  }, status: :ok
+               else
+                  render json: {
+                     status: 'ERROR',
+                     message: 'Invalid URL. Please double check the URL you entered.',
+                     data: "Cannot show data for security reasons"
+                  }, status: :unprocessable_entity
+               end
+              
+            end
+
             private
 
             def product_params

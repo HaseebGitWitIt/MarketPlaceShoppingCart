@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'productapi' do
       namespace 'v1' do
-        resources :products 
+        resources :products do
+          collection do
+            get '/showMarketPlace/:onlyavail' => 'products#showMarketPlace'
+          end
+        end 
       end
     end
     namespace 'shoppingcartapi' do
