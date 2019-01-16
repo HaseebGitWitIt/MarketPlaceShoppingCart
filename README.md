@@ -71,7 +71,7 @@ Using Postman, Headers tab -> Key: Content-Type Application: application/json, B
 11.	User wants to view a specific shopping cart in the marketplace:
 Using Postman, Prefix Verb: GET, URL: http://localhost:3000/api/shoppingcartapi/v1/shopping_carts/:id, where id is the id of the shopping cart, Send button
 12.	 User wants to remove product shopping cart relationship:
-Using Postman, Prefix Verb: DELETE, URL: http://localhost:3000/api/shoppingcartapi/v1/shoping_carts/:id, where id is the id of the shopping cart - product relationship you want to remove, Send button. Note the total price will automatocally be adjusted.
+Using Postman, Prefix Verb: DELETE, URL: http://localhost:3000/api/shoppingcartapi/v1/shoping_carts/:id, where id is the id of the shopping cart - product relationship you want to remove, Send button. Note the total price will automatically be adjusted.
 13.	  User wants to update details of a shopping cart - product relationship:
 Using Postman, Prefix Verb: PATCH, URL: http://localhost:3000/api/shoppingcartapi/v1/shopping_carts/:id, where id is the id of the shopping cart - product relationship you want to update
 Using Postman, Headers tab -> Key: Content-Type Application: application/json, Body tab -> raw. Inside the text field,  enter the fields you want to change:
