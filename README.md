@@ -1,4 +1,5 @@
 Files changed:
+
     - Gemfile: import/install files
     - app/controllers/api/productapi/v1/products_controller.rb: Product actions
     - app/controllers/api/shoppingcartapi/v1/shopping_carts_controller.rb: Shopping cart actions
@@ -13,6 +14,7 @@ Files changed:
     - db/seeds.rb: Create fake data in products table (for testing purposes)
 
 How I Tested (Assuming Already Have Rails Installed on Windows):
+
     - Download XAMPP and get Postman (Google Chrome extension)
     - Open the XAMPP Control Panel and start Apache and MySQL
     - Using a browser go to 'localhost/phpmyadmin' and:
