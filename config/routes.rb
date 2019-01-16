@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace 'api' do
     namespace 'productapi' do
       namespace 'v1' do
+        # Get all default REST actions
         resources :products do
           collection do
+            # Show all the items in the market place. :onlyavail is true if the user only wants to see the products in stock, and false if they want to see all the products in the market place.
             get '/showMarketPlace/:onlyavail' => 'products#showMarketPlace'
           end
         end 
@@ -12,10 +13,13 @@ Rails.application.routes.draw do
     end
     namespace 'shoppingcartapi' do
       namespace 'v1' do
+        # Get all default REST actions
         resources :shopping_carts do
-          member do
-            post '/purchase' => 'shopping_carts#purchase'
-            get '/getShoppingCartItems' => 'shopping_carts#getShoppingCartItems'
+          collection do
+            # Purchase all the products associated to a shopping cart (must provide shopping cart number)
+            post '/purchase/:shoppingcartnum' => 'shopping_carts#purchase'
+            # View all the products associated to a shopping cart (must provide shopping cart number)
+            get '/getShoppingCartItems/:shoppingcartnum' => 'shopping_carts#getShoppingCartItems'
           end
         end
       end

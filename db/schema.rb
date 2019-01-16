@@ -1,17 +1,8 @@
-# This file is auto-generated from the current state of the database. Instead
-# of editing this file, please use the migrations feature of Active Record to
-# incrementally modify your database, and then regenerate this schema definition.
-#
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
-#
-# It's strongly recommended that you check this file into your version control system.
-
 ActiveRecord::Schema.define(version: 20190115163137) do
-
+  # products table is used to store all the products in the market place.
+  # title: Name of the product
+  # price: Cost of product
+  # quantity: Amount of product in stock
   create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "title"
     t.decimal "price", precision: 10
@@ -19,13 +10,17 @@ ActiveRecord::Schema.define(version: 20190115163137) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
+  
+  # shopping_carts table is used to store the association between multiple products, making it easier to purchase multiple items at once
+  # shopping_cart_num: The shopping cart number
+  # product_num: The id of the product associated with the shopping cart
+  # total price: The sum of all the products associated with this shopping cart number
   create_table "shopping_carts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "shopping_cart_num"
     t.integer "product_num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "total_price"
+    t.decimal "total_price", precision: 10
   end
 
 end
