@@ -20,6 +20,8 @@ Rails.application.routes.draw do
             post '/purchase/:shoppingcartnum' => 'shopping_carts#purchase'
             # View all the products associated to a shopping cart (must provide shopping cart number)
             get '/getShoppingCartItems/:shoppingcartnum' => 'shopping_carts#getShoppingCartItems'
+            # Remove shopping cart (must provide shopping cart number)
+            delete '/removeShoppingCart/:shoppingcartnum' => 'shopping_carts#removeShoppingCart'
           end
         end
       end

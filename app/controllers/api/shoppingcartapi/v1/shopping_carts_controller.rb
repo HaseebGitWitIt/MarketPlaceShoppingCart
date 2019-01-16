@@ -27,7 +27,7 @@ module Api
                }, status: :ok
             end
 
-            # This action is used to associate a shopping cart with a product (given a shopping cart number and a product number).
+            # This action is used to associate a shopping cart with a product (given a shopping cart number and a product number). The total price will automatically be set.
             def create
                shoppingCart = ShoppingCart.new(shopping_cart_params)
                setTotalPrice
@@ -46,19 +46,33 @@ module Api
                end
             end
 
-            # This action is used to remove an association between a shopping cart and product (given an id).
+            # This action is used to remove an association between a shopping cart and product (given an id). The total price will automatically be adjusted.
             def destroy
                shoppingCart = ShoppingCart.find(params[:id])
                shoppingCart.destroy
                setTotalPrice
                render json: {
                   status: 'SUCCESS',
-                  message: 'Removed specific shopping cart',
+                  message: 'Removed specific shopping cart - product relationship',
                   data: shoppingCart
                }, status: :ok
             end
 
-            # This action is used to update the data of the relationship between a shopping cart and product (given a shopping cart number and/or product number)
+           # This action is used to remove a shopping cart (given a shopping cart number).
+           def removeShoppingCart
+            shoppingCarts = ShoppingCart.where(shopping_cart_num: params[:shoppingcartnum])
+            shoppingCarts.all.each do |x|
+               x.destroy
+            end
+            render json: {
+               status: 'SUCCESS',
+               message: 'Removed shopping cart',
+               data: "Removed the shopping cart."
+            }, status: :ok
+            end
+
+
+            # This action is used to update the data of the relationship between a shopping cart and product (given a shopping cart number and/or product number). The total price will automatically be adjusted.
             def update 
                shoppingCart = ShoppingCart.find(params[:id])
                setTotalPrice
@@ -124,7 +138,7 @@ module Api
                params.permit(:shopping_cart_num, :product_num)
             end
 
-            # This method is used within most actions to update the total price of all the products associated with a shopping cart.
+            # This method is used within most actions associated with the shopping cart to update the total price of all the products associated with a shopping cart.
             def setTotalPrice
                ShoppingCart.all.each do |shoppingcart|
                   shopCartNum = shoppingcart.shopping_cart_num
