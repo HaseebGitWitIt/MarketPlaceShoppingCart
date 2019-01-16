@@ -43,10 +43,14 @@ module Api
                end
             end
 
-            # This action is used to remove a product from the market place (given an id).
+            # This action is used to remove a product from the market place (given an id). Note that this will also remove the item from shopping carts.
             def destroy
                product = Product.find(params[:id])
                product.destroy
+               removeFromShoppingCart = ShoppingCart.where(product_num: params[:id])
+               removeFromShoppingCart.all.each do |x|
+                  x.destroy
+               end
                render json: {
                   status: 'SUCCESS',
                   message: 'Removed specific product',
