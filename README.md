@@ -1,6 +1,6 @@
 # MarketPlaceShoppingCart
 
-USER GUIDE (Note: View entire source file for full user guide)
+USER GUIDE (Note: View entire source file for full user guide (14 options))
    1. User wants to view ALL items in marketplace:
       Using Postman, Prefix Verb: GET, URL: http://localhost:3000/api/productapi/v1/products/showMarketPlace/false, Send button
    2. User wants to only view items in stock in marketplace:
