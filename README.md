@@ -28,6 +28,7 @@ USER GUIDE (Note: View entire source file for full user guide (14 options))
     6. User wants to remove an item from the market place:
       Using Postman, Prefix Verb: DELETE, URL: http://localhost:3000/api/productapi/v1/products/:id, where id is the id of the product you want to remove, Send button
       NOTE: This will also remove this item from any shopping cart that has it.
+    
     7. If the user wants to purchase all of the items in a shopping cart:
         Using Postman, Prefix Verb: POST, URL: http://localhost:3000/api/shoppingcartapi/v1/shopping_carts/purchase/:shoppingcartnum, where shoppingcartnum is the shopping cart number you want to purchase, Send button
         NOTE: This will lower the stock of all products in the shopping cart by 1, and will ignore the products that are already out of stock.
