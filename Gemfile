@@ -10,7 +10,7 @@ gem 'rails', '~> 5.1.6', '>= 5.1.6.1'
 # We want to use mysql2, so we need to install
 gem 'mysql2'
 
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.12'
 
 
 group :development, :test do
